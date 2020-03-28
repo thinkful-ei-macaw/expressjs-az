@@ -73,20 +73,47 @@ app.get('/sum', (req, res) => {
 });
 
 
-
-
-
-
-
-
 // 2. 
 
 app.get('/cipher', (req, res) => {
   const { text, shift } = req.query;
   
-
-  function cipher(text, shift) {
-    return 
+  if(!text) {
+    return res
+      .status(400)
+      .send('text is required');
   }
+
+  if(!shift) {
+    return res
+      .status(400)
+      .send('shift is required');
+  }
+
+  const numShift = parseFloat(shift);
+
+  if(Number.isNaN(numShift)) {
+    return res
+      .status(400)
+      .send('shift must be a number');
+  }
+
+  // Everything is valid so now we can perform task
+  const changeToCharCode = text.split('').map(letter => {
+    return letter.toLowerCase().charCodeAt(0) + Number(shift);
+  });
+
+  const cipherString = changeToCharCode.map(number => {
+    if (number > 122) {
+      let diff = number - 123;
+      return String.fromCharCode(97 + diff);
+    } else {
+      return String.fromCharCode(number);
+    }
+  });
+
+  res.send(cipherString.join(''));
 });
 
+
+// 3. name
