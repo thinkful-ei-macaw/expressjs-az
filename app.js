@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/burgers', (req, res) => {
-  res.send('We have juicy cheese burgers!');
+  res.send('We have juicy bacon cheese burgers!');
 });
 
 app.get('/echo', (req, res) => {
@@ -50,7 +50,43 @@ app.get('/greetings', (req, res) => {
 });
 
 
-
 app.listen(8000, () => {
   console.log('Express server is listening on port 8000!');
 });
+
+
+
+
+// ***** ASSIGNMENT *****
+
+// 1. 
+app.get('/sum', (req, res) => {
+  const numA = req.query.a;
+  const numB = req.query.b;
+
+  const sum = parseInt(numA) + parseInt(numB);
+
+  const statement = `The sum of ${numA} and ${numB} is ${sum}.`;
+
+  res.send(statement);
+
+});
+
+
+
+
+
+
+
+
+// 2. 
+
+app.get('/cipher', (req, res) => {
+  const { text, shift } = req.query;
+  
+
+  function cipher(text, shift) {
+    return 
+  }
+});
+
