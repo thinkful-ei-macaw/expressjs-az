@@ -50,10 +50,6 @@ app.get('/greetings', (req, res) => {
 });
 
 
-app.listen(8000, () => {
-  console.log('Express server is listening on port 8000!');
-});
-
 
 
 
@@ -117,3 +113,41 @@ app.get('/cipher', (req, res) => {
 
 
 // 3. name
+app.get('/lotto', (req, res) => {
+  const { numbers } = req.query;
+  
+  if(!numbers) {
+    return res
+      .status(400)
+      .send('numbers is required');
+  }
+
+  if(!Array.isArray(numbers)) {
+    return res
+      .status(400)
+      .send('numbers must be an array');
+  }
+
+  const verifiedNumbers = numbers
+    .map(n => parseInt(n))
+    .filter(n => !Number.isNaN(n) && (n >= 1 && n<= 20));
+
+  if(verifiedNumbers.length !== 6) {
+    return res
+      .status(400)
+      .send('numbers must contain 6 integers between 1 and 20');
+  }
+
+  // number entries are now Validated
+  let winningNumbers = [];
+
+  while (winningNumbers.length <= 6) 
+
+
+  res.send(numbers);
+});
+
+
+app.listen(8000, () => {
+  console.log('Express server is listening on port 8000!');
+});
