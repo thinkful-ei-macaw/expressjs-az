@@ -112,10 +112,11 @@ app.get('/cipher', (req, res) => {
 });
 
 
-// 3. name
+// 3. Lotto end point
+
 app.get('/lotto', (req, res) => {
   const { numbers } = req.query;
-  
+  // console.log(numbers);
   if(!numbers) {
     return res
       .status(400)
@@ -131,7 +132,8 @@ app.get('/lotto', (req, res) => {
   const verifiedNumbers = numbers
     .map(n => parseInt(n))
     .filter(n => !Number.isNaN(n) && (n >= 1 && n<= 20));
-
+  // console.log(verifiedNumbers);
+  
   if(verifiedNumbers.length !== 6) {
     return res
       .status(400)
@@ -141,10 +143,22 @@ app.get('/lotto', (req, res) => {
   // number entries are now Validated
   let winningNumbers = [];
 
-  while (winningNumbers.length <= 6) 
+  while (winningNumbers.length <= 6) {
+    winningNumbers.push(Math.floor(Math.random() * 20));
+  }
+
+  // compare the two arrays of numbers
+  let matchingNumbers = winningNumbers.filter(n => verifiedNumbers.includes(n));
+
+  let responseStatement;
+
+  matchingNumbers.length < 4 ? responseStatement = 'Sorry you lose.' : 
+    matchingNumbers.length === 4 ? responseStatement = 'Congrats, you won a free ticket.' : 
+      matchingNumbers.length === 5 ? responseStatement = 'Congrats! You won $100!' : responseStatement = 'Wow! Unbelievable! You could have won the mega millions!';
 
 
-  res.send(numbers);
+
+  res.send(responseStatement);
 });
 
 
